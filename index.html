@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Defter - 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --text-color: #334155;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --light-color: #1f2937;
+            --dark-color: #f3f4f6;
+            --text-color: #e5e7eb;
+            --border-color: #374151;
+            --bg-color: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color, #f9fafb);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* Search and Filter */
+        .search-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .search-container, .filter-container {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .filter-container select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-container select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Notes Container */
+        .notes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Note Card */
+        .note-card {
+            background-color: var(--light-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .note-card.important {
+            border-left-color: var(--danger-color);
+        }
+
+        .note-card.personal {
+            border-left-color: var(--success-color);
+        }
+
+        .note-card.work {
+            border-left-color: var(--warning-color);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .note-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .note-category {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .note-category.important {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .note-category.personal {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .note-category.work {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .note-content {
+            flex-grow: 1;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-actions button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .note-actions button:hover {
+            color: var(--primary-color);
+        }
+
+        .note-actions .delete-btn:hover {
+            color: var(--danger-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--light-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color, white);
+            color: var(--text-color);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast i {
+            font-size: 20px;
+            color: var(--success-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .notes-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Digital Defter</h1>
+            </div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="btn-icon" aria-label="Tema değiştir" title="Tema değiştir">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="add-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Yeni Not
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="search-bar">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Notlarda ara..." aria-label="Notlarda ara">
+                </div>
+                <div class="filter-container">
+                    <select id="filter-select" aria-label="Notları kategoriye göre filtrele">
+                        <option value="all">Tümü</option>
+                        <option value="important">Önemli</option>
+                        <option value="personal">Kişisel</option>
+                        <option value="work">İş</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="notes-container" class="notes-container" aria-live="polite">
+                <!-- Notlar burada dinamik olarak eklenecek -->
+                <div class="empty-state">
+                    <i class="fas fa-sticky-note"></i>
+                    <h3>Henüz notunuz yok</h3>
+                    <p>Yeni not eklemek için "Yeni Not" butonuna tıklayın</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Not Modal -->
+    <div id="note-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Yeni Not Ekle</h2>
+                <button id="close-modal" class="btn-icon" aria-label="Modalı kapat" title="Modalı kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="note-form">
+                <div class="form-group">
+                    <label for="note-title">Başlık</label>
+                    <input type="text" id="note-title" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="note-category">Kategori</label>
+                    <select id="note-category" aria-required="true">
+                        <option value="personal">Kişisel</option>
+                        <option value="work">İş</option>
+                        <option value="important">Önemli</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="note-content">İçerik</label>
+                    <textarea id="note-content" rows="10" required aria-required="true"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" class="btn-secondary">İptal</button>
+                    <button type="submit" id="save-btn" class="btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Bildirim -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">İşlem başarılı!</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Element Seçicileri
+            const addBtn = document.getElementById('add-btn');
+            const noteModal = document.getElementById('note-modal');
+            const closeModal = document.getElementById('close-modal');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const noteForm = document.getElementById('note-form');
+            const notesContainer = document.getElementById('notes-container');
+            const searchInput = document.getElementById('search-input');
+            const filterSelect = document.getElementById('filter-select');
+            const themeToggle = document.getElementById('theme-toggle');
+            const modalTitle = document.getElementById('modal-title');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Değişkenler
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            let currentNoteId = null;
+            
+            // Tema Yönetimi
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                if (newTheme === 'dark') {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+            
+            // Toast Bildirimi
+            function showToast(message, duration = 3000) {
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, duration);
+            }
+            
+            // Not Ekleme Modalını Aç
+            addBtn.addEventListener('click', () => {
+                currentNoteId = null;
+                modalTitle.textContent = 'Yeni Not Ekle';
+                noteForm.reset();
+                noteModal.classList.add('active');
+            });
+            
+            // Modalı Kapat
+            function closeModalFunc() {
+                noteModal.classList.remove('active');
+                noteForm.reset();
+            }
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            cancelBtn.addEventListener('click', closeModalFunc);
+            
+            // Modal Dışına Tıklayınca Kapat
+            noteModal.addEventListener('click', (e) => {
+                if (e.target === noteModal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Not Kaydetme
+            noteForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const title = document.getElementById('note-title').value;
+                const content = document.getElementById('note-content').value;
+                const category = document.getElementById('note-category').value;
+                
+                if (currentNoteId) {
+                    // Notu Güncelle
+                    const noteIndex = notes.findIndex(note => note.id === currentNoteId);
+                    if (noteIndex !== -1) {
+                        notes[noteIndex] = {
+                            ...notes[noteIndex],
+                            title,
+                            content,
+                            category,
+                            updatedAt: new Date().toISOString()
+                        };
+                        showToast('Not başarıyla güncellendi!');
+                    }
+                } else {
+                    // Yeni Not Ekle
+                    const newNote = {
+                        id: Date.now().toString(),
+                        title,
+                        content,
+                        category,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    notes.unshift(newNote);
+                    showToast('Not başarıyla eklendi!');
+                }
+                
+                saveNotes();
+                renderNotes();
+                closeModalFunc();
+            });
+            
+            // Notları LocalStorage'a Kaydet
+            function saveNotes() {
+                localStorage.setItem('notes', JSON.stringify(notes));
+            }
+            
+            // Notları Listeleme
+            function renderNotes(notesToRender = notes) {
+                if (notesToRender.length === 0) {
+                    notesContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-sticky-note"></i>
+                            <h3>Henüz notunuz yok</h3>
+                            <p>Yeni not eklemek için "Yeni Not" butonuna tıklayın</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                notesContainer.innerHTML = notesToRender.map(note => {
+                    const date = new Date(note.updatedAt);
+                    const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+                    
+                    return `
+                        <div class="note-card ${note.category}">
+                            <div class="note-header">
+                                <div>
+                                    <h3 class="note-title">${note.title}</h3>
+                                    <span class="note-category ${note.category}">${getCategoryName(note.category)}</span>
+                                </div>
+                            </div>
+                            <div class="note-content">${note.content}</div>
+                            <div class="note-footer">
+                                <span>${formattedDate}</span>
+                                <div class="note-actions">
+                                    <button class="edit-btn" data-id="${note.id}" aria-label="Notu düzenle">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="delete-btn" data-id="${note.id}" aria-label="Notu sil">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Düzenle ve Sil Butonlarına Event Ekleme
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const noteId = e.currentTarget.getAttribute('data-id');
+                        editNote(noteId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const noteId = e.currentTarget.getAttribute('data-id');
+                        deleteNote(noteId);
+                    });
+                });
+            }
+            
+            // Kategori Adını Getir
+            function getCategoryName(category) {
+                const categories = {
+                    personal: 'Kişisel',
+                    work: 'İş',
+                    important: 'Önemli'
+                };
+                return categories[category] || category;
+            }
+            
+            // Not Düzenleme
+            function editNote(noteId) {
+                const note = notes.find(n => n.id === noteId);
+                if (!note) return;
+                
+                currentNoteId = noteId;
+                modalTitle.textContent = 'Notu Düzenle';
+                
+                document.getElementById('note-title').value = note.title;
+                document.getElementById('note-content').value = note.content;
+                document.getElementById('note-category').value = note.category;
+                
+                noteModal.classList.add('active');
+            }
+            
+            // Not Silme
+            function deleteNote(noteId) {
+                if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+                    notes = notes.filter(note => note.id !== noteId);
+                    saveNotes();
+                    renderNotes();
+                    showToast('Not başarıyla silindi!');
+                }
+            }
+            
+            // Notları Filtreleme ve Arama
+            function filterAndSearchNotes() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filterValue = filterSelect.value;
+                
+                let filteredNotes = notes;
+                
+                // Kategoriye Göre Filtrele
+                if (filterValue !== 'all') {
+                    filteredNotes = filteredNotes.filter(note => note.category === filterValue);
+                }
+                
+                // Arama Terimine Göre Filtrele
+                if (searchTerm) {
+                    filteredNotes = filteredNotes.filter(note => 
+                        note.title.toLowerCase().includes(searchTerm) || 
+                        note.content.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                renderNotes(filteredNotes);
+            }
+            
+            searchInput.addEventListener('input', filterAndSearchNotes);
+            filterSelect.addEventListener('change', filterAndSearchNotes);
+            
+            // İlk Yüklemede Notları Listele
+            renderNotes();
+        });
+    </script>
+</body>
+</html>
